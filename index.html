@@ -539,6 +539,8 @@
             })
             .then(response => {
                 if (response.ok) {
+                    // 구글 애즈 전환 이벤트 실행
+                    gtag_report_conversion();
                     // 성공 시 팝업 표시
                     showSuccessModal();
                     // 폼 리셋
@@ -558,7 +560,27 @@
             });
         });
     </script>
+        <!-- Event snippet for 리드 양식 제출 conversion page
+    In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+    <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-17523678360/9SciCMWel5MbEJi5-KNB',
+          'value': 1.0,
+          'currency': 'KRW',
+          'event_callback': callback
+      });
+      return false;
+    }
+    </script>
+
 </body>
 </html>
+
 
 
