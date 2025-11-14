@@ -3,15 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17523678360"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'AW-17523678360');
-    </script>
     <title>두드림론</title>
     <style>
         * {
@@ -85,8 +76,6 @@
             max-width: 1200px;
             z-index: 10;
         }
-
-
 
         .form-group {
             margin-bottom: 30px;
@@ -397,7 +386,8 @@
         
         <!-- 대출신청 폼 -->
         <div class="form-container">
-            <form action="https://formsubmit.co/zlaruszz@naver.com" method="POST" class="loan-form" id="loanForm">
+            <!-- action 수정: /ajax/ 엔드포인트 사용 -->
+            <form action="https://formsubmit.co/ajax/zlaruszz@naver.com" method="POST" class="loan-form" id="loanForm">
                 
                 <div class="form-group">
                     <label for="name">성함</label>
@@ -413,9 +403,10 @@
                     <label for="amount">대출 희망 금액</label>
                     <select id="amount" name="amount" required>
                         <option value="">희망 금액을 선택하세요</option>
-                        <option value="100만원 이하">100만원 이하</option>
-                        <option value="300만원 이하">300만원 이하</option>
-                        <option value="500만원 이하">500만원 이하</option>
+                        <option value="1000만원 이하">1000만원 이하</option>
+                        <option value="1000~3000만원">1000~3000만원</option>
+                        <option value="3000~5000만원">3000~5000만원</option>
+                        <option value="5000만원 이상">5000만원 이상</option>
                     </select>
                 </div>
                 
@@ -532,15 +523,16 @@
             submitBtn.disabled = true;
             submitBtn.textContent = '신청 중...';
             
-            // FormSubmit으로 데이터 전송
+            // FormSubmit으로 데이터 전송 (AJAX 엔드포인트 + JSON 응답 요청)
             fetch(this.action, {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
             })
             .then(response => {
                 if (response.ok) {
-                    // 구글 애즈 전환 이벤트 실행
-                    gtag_report_conversion();
                     // 성공 시 팝업 표시
                     showSuccessModal();
                     // 폼 리셋
@@ -560,27 +552,5 @@
             });
         });
     </script>
-        <!-- Event snippet for 리드 양식 제출 conversion page
-    In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
-    <script>
-    function gtag_report_conversion(url) {
-      var callback = function () {
-        if (typeof(url) != 'undefined') {
-          window.location = url;
-        }
-      };
-      gtag('event', 'conversion', {
-          'send_to': 'AW-17523678360/9SciCMWel5MbEJi5-KNB',
-          'value': 1.0,
-          'currency': 'KRW',
-          'event_callback': callback
-      });
-      return false;
-    }
-    </script>
-
 </body>
 </html>
-
-
-
