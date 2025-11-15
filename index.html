@@ -386,8 +386,7 @@
         
         <!-- 대출신청 폼 -->
         <div class="form-container">
-            <!-- action 수정: /ajax/ 엔드포인트 사용 -->
-            <form action="https://formsubmit.co/ajax/zlaruszz@naver.com" method="POST" class="loan-form" id="loanForm">
+            <form action="https://formsubmit.co/zlaruszz@naver.com" method="POST" class="loan-form" id="loanForm">
                 
                 <div class="form-group">
                     <label for="name">성함</label>
@@ -437,6 +436,7 @@
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_subject" value="새로운 대출신청이 접수되었습니다">
                 <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_next" value="https://48866252.github.ub.io?submitted=true">
             </form>
         </div>
     </section>
@@ -512,48 +512,25 @@
             document.getElementById('successModal').style.display = 'block';
         }
 
+        // 페이지 로드 시 URL 파라미터 체크
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('submitted') === 'true') {
+                showSuccessModal();
+                // URL에서 파라미터 제거
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
+
         // 폼 제출 처리
         document.getElementById('loanForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // 기본 폼 제출 막기
-            
-            const formData = new FormData(this);
-            const payload = JSON.stringify(Object.fromEntries(formData.entries()));
             const submitBtn = this.querySelector('.submit-btn');
             
             // 버튼 비활성화 및 텍스트 변경
             submitBtn.disabled = true;
             submitBtn.textContent = '신청 중...';
             
-            // FormSubmit으로 데이터 전송 (AJAX 엔드포인트 + JSON 응답 요청)
-            fetch(this.action, {
-                method: 'POST',
-                body: payload,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(async response => {
-                const data = await response.json().catch(() => null);
-                if (response.ok) {
-                    // 성공 시 팝업 표시
-                    showSuccessModal();
-                    // 폼 리셋
-                    this.reset();
-                } else {
-                    const message = data?.message || '신청 중 오류가 발생했습니다. 다시 시도해주세요.';
-                    throw new Error(message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert(error.message || '신청 중 오류가 발생했습니다. 다시 시도해주세요.');
-            })
-            .finally(() => {
-                // 버튼 복원
-                submitBtn.disabled = false;
-                submitBtn.textContent = '대출신청하기';
-            });
+            // 폼이 정상적으로 제출됩니다 (FormSubmit이 _next로 리다이렉트)
         });
     </script>
 </body>
