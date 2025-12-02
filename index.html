@@ -440,7 +440,10 @@
                     </label>
                 </div>
                 
-                <button type="submit" class="submit-btn">대출신청하기</button>
+                <button type="submit" class="submit-btn" onclick="gtag('event', 'conversion', {
+                  'send_to': 'AW-17523678360/9SciCMWel5MbEJi5-KNB',
+                  'value': 1.0,
+                  'currency': 'KRW'});">대출신청하기</button>
                 
                 <!-- Formspree 설정 -->
                 <input type="hidden" name="_subject" value="새로운 대출신청이 접수되었습니다">
@@ -539,20 +542,13 @@
             submitBtn.disabled = true;
             submitBtn.textContent = '신청 중...';
 
-            <!-- Event snippet for 리드 양식 제출 conversion page -->
-            <script>
-              gtag('event', 'conversion', {
-                  'send_to': 'AW-17523678360/9SciCMWel5MbEJi5-KNB',
-                  'value': 1.0,
-                  'currency': 'KRW'
-              });
-            </script>
 
             // 폼이 정상적으로 제출됩니다 (FormSubmit이 _next로 리다이렉트)
         });
     </script>
 </body>
 </html>
+
 
 
 
