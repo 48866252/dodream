@@ -533,6 +533,11 @@
 
         // 폼 제출 처리
         document.getElementById('loanForm').addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('.submit-btn');
+            
+            // 버튼 비활성화 및 텍스트 변경
+            submitBtn.disabled = true;
+            submitBtn.textContent = '신청 중...';
 
             <!-- Event snippet for 리드 양식 제출 conversion page -->
             <script>
@@ -542,20 +547,13 @@
                   'currency': 'KRW'
               });
             </script>
-        
-            const submitBtn = this.querySelector('.submit-btn');
-            
-            // 버튼 비활성화 및 텍스트 변경
-            submitBtn.disabled = true;
-            submitBtn.textContent = '신청 중...';
-
-
 
             // 폼이 정상적으로 제출됩니다 (FormSubmit이 _next로 리다이렉트)
         });
     </script>
 </body>
 </html>
+
 
 
 
